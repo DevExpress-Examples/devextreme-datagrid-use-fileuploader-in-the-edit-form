@@ -1,0 +1,59 @@
+<dx-data-grid id="gridContainer"
+  [dataSource]="employees"
+  keyExpr="ID"
+  [showBorders]="true">
+
+  <dxo-editing
+    mode="popup"
+    [allowUpdating]="true">
+    <dxo-popup
+      title="Employee Info"
+      [showTitle]="true"
+      [width]="700">
+    </dxo-popup>
+    <dxo-form>
+      <dxi-item itemType="group" [colCount]="2" [colSpan]="2">
+        <dxi-item dataField="Prefix"></dxi-item>
+        <dxi-item dataField="FirstName"></dxi-item>
+        <dxi-item dataField="LastName"></dxi-item>
+        <dxi-item dataField="Position"></dxi-item>
+        <dxi-item dataField="BirthDate"></dxi-item>
+        <dxi-item dataField="HireDate"></dxi-item>
+      </dxi-item>
+      <dxi-item itemType="group" caption="Photo" [colCount]="2" [colSpan]="2">
+        <dxi-item dataField="Picture" [colSpan]="2"></dxi-item>
+      </dxi-item>
+    </dxo-form>
+  </dxo-editing>
+
+  <dxi-column dataField="Picture"
+              [allowFiltering]="false"
+              [allowSorting]="false"
+              cellTemplate="cellTemplate"
+              editCellTemplate="editCellTemplate">
+  </dxi-column>
+  <dxi-column dataField="Prefix" [width]="70" caption="Title"></dxi-column>
+  <dxi-column dataField="FirstName"></dxi-column>
+  <dxi-column dataField="LastName"></dxi-column>
+  <dxi-column dataField="Position"></dxi-column>
+  <dxi-column dataField="BirthDate" dataType="date"></dxi-column>
+  <dxi-column dataField="HireDate" dataType="date"></dxi-column>
+
+  <div *dxTemplate="let data of 'cellTemplate'">
+    <img [src]="backendURL + data.value"/>
+  </div>
+  <div *dxTemplate="let data of 'editCellTemplate'">
+    <img #uploadedImage class="uploadedImage" [src]="backendURL + data.value"/>
+    <dx-file-uploader
+      #fileUploader
+      [multiple]="false"
+      accept="image/!*"
+      uploadMode="instantly"
+      [uploadUrl]="backendURL + 'FileUpload/post'"
+      (onValueChanged)="onValueChanged($event)"
+      (onUploaded)="onUploaded($event, data)"
+      (onUploadError)="onUploadError($event)"
+    ></dx-file-uploader>
+    <dx-button class="retryButton" text="Retry" [visible]="retryButtonVisible" (click)="onClick($event)"></dx-button>
+  </div>
+</dx-data-grid>
