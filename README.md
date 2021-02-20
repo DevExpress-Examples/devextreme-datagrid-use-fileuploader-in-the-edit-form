@@ -5,7 +5,7 @@ This example illustrates a simple scenario on how to use the [dxFileUploader](ht
 
 DataGrid has the `Picture` field which holds an associated image file name. We use [cellTemplate](https://js.devexpress.com/Documentation/ApiReference/UI_Widgets/dxDataGrid/Configuration/columns/#cellTemplate) to display images as illustrated in the following demo: [Column Template](https://js.devexpress.com/Demos/WidgetsGallery/Demo/DataGrid/ColumnTemplate/jQuery/Light/). 
 
-To implement the file upload UI/logic, we use the [onEditorPreparing](https://js.devexpress.com/Documentation/ApiReference/UI_Widgets/dxDataGrid/Configuration/#onEditorPreparing) event handler and enable the [dxFileUploader](https://js.devexpress.com/Documentation/ApiReference/UI_Widgets/dxFileUploader/) component for the `Picture` field.
+To implement the file upload UI/logic, we use [editCellTemplate](https://js.devexpress.com/Documentation/ApiReference/UI_Components/dxDataGrid/Configuration/columns/#editCellTemplate) for the `Picture` field.
 
 The server part for the file uploading is implemented as a separate backend solution located in the [BackendApp](./BackendApp/) directory. 
 
