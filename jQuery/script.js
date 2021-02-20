@@ -5,7 +5,29 @@ $(function () {
     showBorders: true,
     editing: {
       mode: "popup",
-      allowUpdating: true
+      allowUpdating: true,
+      popup: {
+        title: "Employee Info",
+        showTitle: true,
+        width: 700,
+      },
+      form: {
+        items: [{
+          itemType: "group",
+          colCount: 2,
+          colSpan: 2,
+          items: ["Prefix", "Title", "FirstName", "LastName", "Position", "BirthDate", "HireDate"]
+        }, {
+          itemType: "group",
+          colCount: 2,
+          colSpan: 2,
+          caption: "Photo",
+          items: [{
+            dataField: "Picture",
+            colSpan: 2
+          }]
+        }]
+      }
     },
     columns: [{
       dataField: "Picture",
@@ -35,41 +57,60 @@ $(function () {
 let backendURL = "http://localhost:5000/"
 
 function cellTemplate(container, options) {
-  $("<div>")
-    .append($("<img>", { "src": backendURL + options.value }))
-    .appendTo(container);
+  let imgElement = document.createElement("img");
+  imgElement.setAttribute("src", backendURL + options.value);
+  container.append(imgElement);
 }
 
 function editCellTemplate(cellElement, cellInfo) {
-  return $("<div>").dxFileUploader({
+  let buttonElement = document.createElement("div");
+  buttonElement.classList.add("buttonClear");
+  let buttonClear = $(buttonElement).dxButton({
+    text: "Retry",
+    visible: false,
+    onClick: function() {
+      // The retry UI/API is not implemented. Use a private API as shown at T611719.
+      for (var i = 0; i < fileUploader._files.length; i++) {
+        delete fileUploader._files[i].uploadStarted;
+      }
+      fileUploader._uploadFiles();
+    }
+  }).dxButton("instance");
+
+  let fileUploaderElement = document.createElement("div");
+  let fileUploader = $(fileUploaderElement).dxFileUploader({
     multiple: false,
     accept: "image/*",
     uploadMode: "instantly",
     uploadUrl: backendURL + "FileUpload/post",
-    onValueChanged: function (e) {
-      var url = e.component.option("uploadUrl");
-      let uuid = uuidv4();
-      console.log(uuid);
-      url = updateQueryStringParameter(url, "fileGuid", uuid);
-      e.component.option("uploadUrl", url);
-      cellInfo.setValue("images/employees/" + uuid + ".png")
+    onValueChanged: function(e) {
+      let reader = new FileReader();
+      reader.onload = function(e) {
+        imageElement.setAttribute('src', e.target.result);
+      }
+      reader.readAsDataURL(e.value[0]); // convert to base64 string
+    },
+    onUploaded: function(e){
+      cellInfo.setValue("images/employees/" + e.request.responseText);
+      buttonClear.option("visible", false);
+    },
+    onUploadError: function(e){
+      let xhttp = e.request;
+      if(xhttp.status === 400){
+        e.message = e.error.responseText;
+      }
+      if(xhttp.readyState == 4 && xhttp.status == 0) {
+        e.message = "Connection refused";
+      }
+      buttonClear.option("visible", true);
     }
-  });
-}
+  }).dxFileUploader("instance");
 
-function updateQueryStringParameter(uri, key, value) {
-  var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
-  var separator = uri.indexOf("?") !== -1 ? "&" : "?";
-  if (uri.match(re)) {
-    return uri.replace(re, "$1" + key + "=" + value + "$2");
-  } else {
-    return uri + separator + key + "=" + value;
-  }
-}
-function uuidv4() {
-  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
-    var r = (Math.random() * 16) | 0,
-      v = c == "x" ? r : (r & 0x3) | 0x8;
-    return v.toString(16);
-  });
+  let imageElement = document.createElement("img");
+  imageElement.classList.add("uploadedImage");
+  imageElement.setAttribute('src', backendURL + cellInfo.value);
+
+  cellElement.append(imageElement);
+  cellElement.append(fileUploaderElement);
+  cellElement.append(buttonElement);
 }

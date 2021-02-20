@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.IO;
@@ -15,11 +16,13 @@ namespace BackendApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post(Guid fileGuid) {
-            var files = Request.Form.Files;
-            if(files.Count > 0) {
+        public IActionResult Post() {
+            IFormFileCollection files = Request.Form.Files;
+            string uniqueFileName = "";
+
+            if (files.Count > 0) {
                 var file = files[0];
-                var uniqueFileName = string.Format("{0}{1}", fileGuid, Path.GetExtension(file.FileName));
+                uniqueFileName = string.Format("{0}{1}", Guid.NewGuid(), Path.GetExtension(file.FileName));
 
                 try {
                     var path = Path.Combine(_hostEnvironment.WebRootPath, "images/employees/" + uniqueFileName);
@@ -28,11 +31,11 @@ namespace BackendApp.Controllers
                         file.CopyTo(fileStream);
                     }
                 } catch {
-                    return BadRequest("error");
+                    return BadRequest("Failed to save a file on the server");
                 }
             }
 
-            return Ok();
+            return Ok(uniqueFileName);
         }
     }
 }
