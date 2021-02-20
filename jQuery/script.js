@@ -16,7 +16,7 @@ $(function () {
           itemType: "group",
           colCount: 2,
           colSpan: 2,
-          items: ["Prefix", "Title", "FirstName", "LastName", "Position", "BirthDate", "HireDate"]
+          items: ["Prefix", "FirstName", "LastName", "Position", "BirthDate", "HireDate"]
         }, {
           itemType: "group",
           colCount: 2,
