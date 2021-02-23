@@ -1,6 +1,6 @@
 import {Component, ViewChild} from '@angular/core';
 import {Service, Employee} from './app.service';
-import {DxFileUploaderComponent} from 'devextreme-angular';
+import {DxFileUploaderComponent} from 'devextreme-angular/ui/file-uploader';
 
 @Component({
   selector: 'app-root',

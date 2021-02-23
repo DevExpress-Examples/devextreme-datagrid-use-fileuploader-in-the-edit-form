@@ -1,6 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {DxButtonModule, DxDataGridModule, DxFileUploaderModule} from 'devextreme-angular';
+import { DxButtonModule } from 'devextreme-angular/ui/button';
+import { DxDataGridModule } from 'devextreme-angular/ui/data-grid';
+import { DxFileUploaderModule } from 'devextreme-angular/ui/file-uploader';
 
 import { AppComponent } from './app.component';
 
