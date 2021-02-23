@@ -6,8 +6,8 @@
   "dependencies": {
     "devextreme": "~20.2.5",
     "devextreme-react": "~20.2.5",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
     "react-scripts": "^4.0.2"
   },
   "scripts": {
