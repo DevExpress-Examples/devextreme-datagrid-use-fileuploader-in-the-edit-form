@@ -9,10 +9,9 @@ import {employees} from './data.js';
 const backendURL = "http://localhost:5000/";
 let fileUploaderRef = React.createRef();
 let imgRef = React.createRef();
-let currentCellInfo;
 
 const cellRender = data => {
-  return <img src={backendURL + data.value}/>;
+  return <img src={backendURL + data.value} alt="employee pic"/>;
 }
 
 const onClick = e => {
@@ -36,20 +35,19 @@ function App(props) {
   const [retryButtonVisible, setRetryButtonVisible] = useState(false);
 
   function editCellRender(cellInfo) {
-    currentCellInfo = cellInfo;
     return (
       <>
-        <img ref={imgRef} className="uploadedImage" src={backendURL + cellInfo.value}/>
+        <img ref={imgRef} className="uploadedImage" src={backendURL + cellInfo.value} alt="employee pic"/>
         <FileUploader ref={fileUploaderRef} multiple={false} accept="image/*" uploadMode="instantly"
                       uploadUrl={backendURL + "FileUpload/post"} onValueChanged={onValueChanged}
-                      onUploaded={onUploaded} onUploadError={onUploadError}/>
+                      onUploaded={e => onUploaded(e, cellInfo)} onUploadError={onUploadError}/>
         <Button className={"retryButton"} text="Retry" visible={retryButtonVisible} onClick={onClick}/>
       </>
     );
   }
 
-  const onUploaded = useCallback(e => {
-    currentCellInfo.setValue("images/employees/" + e.request.responseText);
+  const onUploaded = useCallback((e, cellInfo) => {
+    cellInfo.setValue("images/employees/" + e.request.responseText);
     setRetryButtonVisible(false);
   }, []);
 
@@ -58,7 +56,7 @@ function App(props) {
     if (xhttp.status === 400) {
       e.message = e.error.responseText;
     }
-    if (xhttp.readyState == 4 && xhttp.status == 0) {
+    if (xhttp.readyState === 4 && xhttp.status === 0) {
       e.message = "Connection refused";
     }
     setRetryButtonVisible(true);
@@ -67,12 +65,12 @@ function App(props) {
   const onEditCanceled = useCallback(e => {
     if (retryButtonVisible)
       setRetryButtonVisible(false);
-  }, [])
+  }, [retryButtonVisible])
 
   const onSaved = useCallback(e => {
     if (retryButtonVisible)
       setRetryButtonVisible(false);
-  }, [])
+  }, [retryButtonVisible])
 
   return (
     <DataGrid id="gridContainer"
@@ -101,6 +99,7 @@ function App(props) {
         </Form>
       </Editing>
       <Column dataField="Picture"
+              width={70}
               allowSorting={false}
               cellRender={cellRender}
               editCellRender={editCellRender}

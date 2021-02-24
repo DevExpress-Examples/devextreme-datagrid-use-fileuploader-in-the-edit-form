@@ -31,6 +31,7 @@ $(function () {
     },
     columns: [{
       dataField: "Picture",
+      width: 70,
       allowFiltering: false,
       allowSorting: false,
       cellTemplate: cellTemplate,
@@ -64,8 +65,8 @@ function cellTemplate(container, options) {
 
 function editCellTemplate(cellElement, cellInfo) {
   let buttonElement = document.createElement("div");
-  buttonElement.classList.add("buttonClear");
-  let buttonClear = $(buttonElement).dxButton({
+  buttonElement.classList.add("retryButton");
+  let retryButton = $(buttonElement).dxButton({
     text: "Retry",
     visible: false,
     onClick: function() {
@@ -85,24 +86,24 @@ function editCellTemplate(cellElement, cellInfo) {
     uploadUrl: backendURL + "FileUpload/post",
     onValueChanged: function(e) {
       let reader = new FileReader();
-      reader.onload = function(e) {
-        imageElement.setAttribute('src', e.target.result);
+      reader.onload = function(args) {
+        imageElement.setAttribute('src', args.target.result);
       }
       reader.readAsDataURL(e.value[0]); // convert to base64 string
     },
     onUploaded: function(e){
       cellInfo.setValue("images/employees/" + e.request.responseText);
-      buttonClear.option("visible", false);
+      retryButton.option("visible", false);
     },
     onUploadError: function(e){
       let xhttp = e.request;
       if(xhttp.status === 400){
         e.message = e.error.responseText;
       }
-      if(xhttp.readyState == 4 && xhttp.status == 0) {
+      if(xhttp.readyState === 4 && xhttp.status === 0) {
         e.message = "Connection refused";
       }
-      buttonClear.option("visible", true);
+      retryButton.option("visible", true);
     }
   }).dxFileUploader("instance");
 

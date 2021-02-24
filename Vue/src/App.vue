@@ -42,14 +42,15 @@
         </DxForm>
       </DxEditing>
       <DxColumn
-          :allow-sorting="false"
           data-field="Picture"
+          :width="70"
+          :allow-sorting="false"
           cell-template="cellTemplate"
           edit-cell-template="editCellTemplate"
       />
       <DxColumn
-          :width="70"
           data-field="Prefix"
+          :width="70"
           caption="Title"
       />
       <DxColumn data-field="FirstName"/>
@@ -143,7 +144,7 @@ export default {
       if(xhttp.status === 400){
         e.message = e.error.responseText;
       }
-      if(xhttp.readyState == 4 && xhttp.status == 0) {
+      if(xhttp.readyState === 4 && xhttp.status === 0) {
         e.message = "Connection refused";
       }
       this.retryButtonVisible = true;

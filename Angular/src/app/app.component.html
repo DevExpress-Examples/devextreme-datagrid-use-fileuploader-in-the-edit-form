@@ -1,7 +1,9 @@
 <dx-data-grid id="gridContainer"
   [dataSource]="employees"
   keyExpr="ID"
-  [showBorders]="true">
+  [showBorders]="true"
+  (onEditCanceled)="onEditCanceled($event)"
+  (onSaved)="onSaved($event)">
 
   <dxo-editing
     mode="popup"
@@ -26,7 +28,7 @@
     </dxo-form>
   </dxo-editing>
 
-  <dxi-column dataField="Picture"
+  <dxi-column dataField="Picture" [width]="70"
               [allowFiltering]="false"
               [allowSorting]="false"
               cellTemplate="cellTemplate"
