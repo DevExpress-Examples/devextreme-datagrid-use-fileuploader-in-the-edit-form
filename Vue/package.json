@@ -29,11 +29,13 @@
       "node": true
     },
     "extends": [
-      "eslint:recommended"
+      "eslint:recommended",
+      "plugin:vue/base"
     ],
     "rules": {},
     "parserOptions": {
-      "parser": "babel-eslint",
+      "ecmaVersion": 2015,
+      "parser": "babel-eslint",      
       "sourceType": "module"
     }
   },
