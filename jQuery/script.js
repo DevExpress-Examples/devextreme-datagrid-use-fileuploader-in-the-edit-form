@@ -74,7 +74,7 @@ function editCellTemplate(cellElement, cellInfo) {
       for (var i = 0; i < fileUploader._files.length; i++) {
         delete fileUploader._files[i].uploadStarted;
       }
-      fileUploader._uploadFiles();
+      fileUploader.upload();
     }
   }).dxButton("instance");
 

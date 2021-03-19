@@ -126,7 +126,7 @@ export default {
       for (var i = 0; i < this.fileUploader._files.length; i++) {
         delete this.fileUploader._files[i].uploadStarted;
       }
-      this.fileUploader._uploadFiles();
+      this.fileUploader.upload();
     },
     onValueChanged(e) {
       let reader = new FileReader();

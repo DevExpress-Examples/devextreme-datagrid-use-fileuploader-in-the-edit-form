@@ -20,7 +20,7 @@ const onClick = e => {
   for (let i = 0; i < fileUploaderInstance._files.length; i++) {
     delete fileUploaderInstance._files[i].uploadStarted;
   }
-  fileUploaderInstance._uploadFiles();
+  fileUploaderInstance.upload();
 };
 
 const onValueChanged = e => {

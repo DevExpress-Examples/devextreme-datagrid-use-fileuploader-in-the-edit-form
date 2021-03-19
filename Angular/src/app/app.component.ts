@@ -30,7 +30,7 @@ export class AppComponent {
       delete fileUploaderInstance._files[i].uploadStarted;
     }
     // @ts-ignore
-    fileUploaderInstance._uploadFiles();
+    fileUploaderInstance.upload();
   }
 
   onValueChanged(e: any): void {
