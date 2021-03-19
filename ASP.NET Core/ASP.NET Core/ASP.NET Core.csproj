@@ -2,6 +2,7 @@
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
     </PropertyGroup>
+    <PropertyGroup Condition=" '$(RunConfiguration)' == 'ASP_NET_Core' " />
     <ItemGroup>
     <PackageReference Include="DevExtreme.AspNet.Data" Version="2.7.1" />
     <PackageReference Include="DevExtreme.AspNet.Core" Version="20.2.5" />

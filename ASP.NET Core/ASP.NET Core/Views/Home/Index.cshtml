@@ -1,65 +1,7 @@
 <script src="~/data/employees.js"></script>
+
 <script>
-    let backendURL = "http://localhost:5000/"
-
-    function cellTemplate(container, options) {
-        let imgElement = document.createElement("img");
-        imgElement.setAttribute("src", backendURL + options.value);
-        container.append(imgElement);
-    }
-
-    function editCellTemplate(cellElement, cellInfo) {
-        let buttonElement = document.createElement("div");
-        buttonElement.classList.add("retryButton");
-        let retryButton = $(buttonElement).dxButton({
-            text: "Retry",
-            visible: false,
-            onClick: function () {
-                // The retry UI/API is not implemented. Use a private API as shown at T611719.
-                for (let i = 0; i < fileUploader._files.length; i++) {
-                    delete fileUploader._files[i].uploadStarted;
-                }
-                fileUploader._uploadFiles();
-            }
-        }).dxButton("instance");
-
-        let fileUploaderElement = document.createElement("div");
-        let fileUploader = $(fileUploaderElement).dxFileUploader({
-            multiple: false,
-            accept: "image/*",
-            uploadMode: "instantly",
-            uploadUrl: backendURL + "FileUpload/post",
-            onValueChanged: function (e) {
-                let reader = new FileReader();
-                reader.onload = function (args) {
-                    imageElement.setAttribute('src', args.target.result);
-                }
-                reader.readAsDataURL(e.value[0]); // convert to base64 string
-            },
-            onUploaded: function (e) {
-                cellInfo.setValue("images/employees/" + e.request.responseText);
-                retryButton.option("visible", false);
-            },
-            onUploadError: function (e) {
-                let xhttp = e.request;
-                if (xhttp.status === 400) {
-                    e.message = e.error.responseText;
-                }
-                if (xhttp.readyState == 4 && xhttp.status == 0) {
-                    e.message = "Connection refused";
-                }
-                retryButton.option("visible", true);
-            }
-        }).dxFileUploader("instance");
-
-        let imageElement = document.createElement("img");
-        imageElement.classList.add("uploadedImage");
-        imageElement.setAttribute('src', backendURL + cellInfo.value);
-
-        cellElement.append(imageElement);
-        cellElement.append(fileUploaderElement);
-        cellElement.append(buttonElement);
-    }
+    let backendURL = "http://localhost:5000/";
 </script>
 
 <style>
@@ -67,15 +9,12 @@
         min-height: 530px;
         width: 1000px;
     }
-
     .dx-row img {
         height: 50px;
     }
-
     .retryButton {
         margin-left: 7px;
     }
-
     .uploadedImage {
         height: 50px;
         margin-left: 7px;
@@ -84,57 +23,62 @@
 </style>
 
 @(Html.DevExtreme().DataGrid()
-    .ID("gridContainer")
-    .ShowBorders(true)
-    .DataSource(new JS("employees"))
-    .KeyExpr("ID")
-    .Editing(e => e.Mode(GridEditMode.Popup)
-        .AllowUpdating(true)
-        .Popup(p => p
-            .Title("Employee Info")
-            .ShowTitle(true)
-            .Width(700)
+        .ShowBorders(true)
+        .DataSource(new JS("employees"))
+        .KeyExpr("ID")
+        .Editing(e => e.Mode(GridEditMode.Popup)
+            .AllowUpdating(true)
+            .Popup(p => p
+                .Title("Employee Info")
+                .ShowTitle(true)
+                .Width(700)
+            )
+            .Form(f => f.Items(items => {
+                items.AddGroup()
+                    .ColCount(2)
+                    .ColSpan(2)
+                    .Items(groupItems => {
+                        groupItems.AddSimple().DataField("Prefix");
+                        groupItems.AddSimple().DataField("FirstName");
+                        groupItems.AddSimple().DataField("LastName");
+                        groupItems.AddSimple().DataField("Position");
+                        groupItems.AddSimple().DataField("BirthDate");
+                        groupItems.AddSimple().DataField("HireDate");
+                    });
+                items.AddGroup()
+                    .Caption("Photo")
+                    .ColCount(2)
+                    .ColSpan(2)
+                    .Items(groupItems => {
+                        groupItems.AddSimple().DataField("Picture").ColSpan(2);
+                    });
+            }))
         )
-        .Form(f => f.Items(items => {
-            items.AddGroup()
-                .ColCount(2)
-                .ColSpan(2)
-                .Items(groupItems => {
-                    groupItems.AddSimple().DataField("Prefix");
-                    groupItems.AddSimple().DataField("FirstName");
-                    groupItems.AddSimple().DataField("LastName");
-                    groupItems.AddSimple().DataField("Position");
-                    groupItems.AddSimple().DataField("BirthDate");
-                    groupItems.AddSimple().DataField("HireDate");
-                });
-            items.AddGroup()
-                .Caption("Photo")
-                .ColCount(2)
-                .ColSpan(2)
-                .Items(groupItems => {
-                    groupItems.AddSimple().DataField("Picture").ColSpan(2);
-                });
-        }))
-    )
-    .Columns(columns => {
-        columns.Add().DataField("Picture")
-            .Width(70)
-            .AllowFiltering(false)
-            .AllowSorting(false)
-            .CellTemplate(new JS("cellTemplate"))
-            .EditCellTemplate(new JS("editCellTemplate"));
+        .Columns(columns => {
+            columns.Add().DataField("Picture")
+                .Width(70)
+                .AllowFiltering(false)
+                .AllowSorting(false)
+                .CellTemplate(
+                    @<text>
+                        @(await Html.PartialAsync("_CellTemplate"))
+                    </text>)
+                .EditCellTemplate(
+                    @<text>
+                        @(await Html.PartialAsync("_EditCellTemplate"))
+                    </text>);
 
-        columns.Add().DataField("Prefix")
-            .Width(70);
+            columns.Add().DataField("Prefix")
+                .Width(70);
 
-        columns.Add().DataField("FirstName");
+            columns.Add().DataField("FirstName");
 
-        columns.Add().DataField("LastName");
+            columns.Add().DataField("LastName");
 
-        columns.Add().DataField("Position");
+            columns.Add().DataField("Position");
 
-        columns.Add().DataField("BirthDate").DataType(GridColumnDataType.Date);
+            columns.Add().DataField("BirthDate").DataType(GridColumnDataType.Date);
 
-        columns.Add().DataField("HireDate").DataType(GridColumnDataType.Date);
-    })
+            columns.Add().DataField("HireDate").DataType(GridColumnDataType.Date);
+        })
 )
