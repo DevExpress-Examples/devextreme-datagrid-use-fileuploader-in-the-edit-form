@@ -5,9 +5,10 @@
 <!-- default badges end -->
 # DataGrid - How to use the DevExtreme FileUploader in the edit form
 
-This example illustrates how to use the [FileUploader](https://js.devexpress.com/Documentation/ApiReference/UI_Widgets/dxFileUploader/) component in the [DataGrid's](https://js.devexpress.com/Documentation/ApiReference/UI_Widgets/dxDataGrid/) edit form. 
+This example illustrates how to use [FileUploader](https://js.devexpress.com/Documentation/ApiReference/UI_Widgets/dxFileUploader/) in the [DataGrid's](https://js.devexpress.com/Documentation/ApiReference/UI_Widgets/dxDataGrid/) edit form. 
 
 ![DevExtreme DataGrid - How to use the DevExtreme FileUploader in the edit form](/images/overview.png)
+
 ## Files to Look At:
 
 - **jQuery**
@@ -25,7 +26,7 @@ This example illustrates how to use the [FileUploader](https://js.devexpress.com
 
 ## Implementation Details
 
-The example consists of the backend service ([BackendApp](BackendApp)) and a client-side application (jQuery/Angular/React/Vue).
+The example consists of the backend service (BackendApp) and a client-side application (jQuery/Angular/React/Vue).
 
 The **backend service** accepts POST requests from the [FileUploader](https://js.devexpress.com/Documentation/ApiReference/UI_Widgets/dxFileUploader/) component, saves uploaded images, and hosts static files. 
 
