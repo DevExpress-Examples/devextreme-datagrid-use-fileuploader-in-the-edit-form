@@ -35,3 +35,8 @@ The **client-side application** displays a page with the [DataGrid](https://js.d
 ##  How to Launch the Example
 
 Open and run the `BackendApp` project in Visual Studio. Then, run the client-side application.
+
+## Documentation
+
+- [Getting Started with DataGrid](https://js.devexpress.com/Documentation/Guide/UI_Components/DataGrid/Getting_Started_with_DataGrid/)
+- [Getting Started with File Uploader](https://js.devexpress.com/Documentation/Guide/UI_Components/FileUploader/)
