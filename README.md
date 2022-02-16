@@ -9,7 +9,7 @@ This example illustrates how to use [FileUploader](https://js.devexpress.com/Doc
 
 ![DevExtreme DataGrid - How to use the DevExtreme FileUploader in the edit form](/images/overview.png)
 
-## Files to Look At:
+## Files to Look At
 
 - **jQuery**
     - [index.html](jQuery/index.html)
@@ -28,7 +28,7 @@ This example illustrates how to use [FileUploader](https://js.devexpress.com/Doc
 
 The example consists of the backend service (BackendApp) and a client-side application (jQuery/Angular/React/Vue).
 
-The **backend service** accepts POST requests from the [FileUploader](https://js.devexpress.com/Documentation/ApiReference/UI_Widgets/dxFileUploader/) component, saves uploaded images, and hosts static files. 
+The **backend service** accepts POST requests from the [FileUploader](https://js.devexpress.com/Documentation/ApiReference/UI_Widgets/dxFileUploader/) component, saves uploaded images, and hosts static files.
 
 The **client-side application** displays a page with the [DataGrid](https://js.devexpress.com/Documentation/ApiReference/UI_Widgets/dxDataGrid/) component. The `Picture` field in the grid contains image file names. The [cellTemplate](https://js.devexpress.com/Documentation/ApiReference/UI_Widgets/dxDataGrid/Configuration/columns/#cellTemplate) property allows you to display images in the column cells as illustrated in the [Column Template](https://js.devexpress.com/Demos/WidgetsGallery/Demo/DataGrid/ColumnTemplate/)  demo. Use the [editCellTemplate](https://js.devexpress.com/Documentation/ApiReference/UI_Components/dxDataGrid/Configuration/columns/#editCellTemplate) property to implement the file upload UI for the `Picture` field in the edit form.
 
