@@ -33,4 +33,4 @@ The **client-side application** displays a page with the [DataGrid](https://js.d
 
 ##  How to Launch the Example
 
-First, open and run the `BackendApp` project in Visual Studio. Then, run the client-side application.
+Open and run the `BackendApp` project in Visual Studio. Then, run the client-side application.
