@@ -7,7 +7,7 @@
 
 This example illustrates how to use [FileUploader](https://js.devexpress.com/Documentation/ApiReference/UI_Widgets/dxFileUploader/) in the [DataGrid's](https://js.devexpress.com/Documentation/ApiReference/UI_Widgets/dxDataGrid/) edit form. 
 
-![DevExtreme DataGrid - How to use the DevExtreme FileUploader in the edit form](/images/overview.png)
+![DevExtreme DataGrid - How to use the DevExtreme FileUploader in the edit form](overview.png)
 
 ## Files to Look At
 
