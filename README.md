@@ -9,7 +9,7 @@ This example illustrates how to use [FileUploader](https://js.devexpress.com/Doc
 
 ![DevExtreme DataGrid - How to use the DevExtreme FileUploader in the edit form](overview.png)
 
-## Files to Look At
+## Files to Review
 
 - **jQuery**
     - [index.html](jQuery/index.html)
