@@ -2,8 +2,14 @@ module.exports = {
     packages: {
       'devextreme-angular':  {
         ignorableDeepImportMatchers: [
-          /devextreme\//
+          /devextreme\//,
+          /jszip\//
         ]
       },
+      'devextreme' : {
+        ignorableDeepImportMatchers: [
+          /devextreme-quill\//
+        ]
+      }
     }
   };
