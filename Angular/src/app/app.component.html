@@ -4,7 +4,6 @@
   [showBorders]="true"
   (onEditCanceled)="onEditCanceled($event)"
   (onSaved)="onSaved($event)">
-
   <dxo-editing
     mode="popup"
     [allowUpdating]="true">
@@ -49,13 +48,15 @@
     <dx-file-uploader
       #fileUploader
       [multiple]="false"
-      accept="image/!*"
+      accept="image/*"
       uploadMode="instantly"
       [uploadUrl]="backendURL + 'FileUpload/post'"
       (onValueChanged)="onValueChanged($event)"
       (onUploaded)="onUploaded($event, data)"
       (onUploadError)="onUploadError($event)"
     ></dx-file-uploader>
-    <dx-button class="retryButton" text="Retry" [visible]="retryButtonVisible" (click)="onClick($event)"></dx-button>
+    <dx-button class="retryButton" text="Retry" [visible]="retryButtonVisible" (onClick)="onClick($event)"></dx-button>
   </div>
 </dx-data-grid>
+
+
