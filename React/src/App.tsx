@@ -1,66 +1,17 @@
-import { useState, useCallback, useRef } from 'react';
+import { useState } from 'react';
 import { useEvent } from './utils';
 import DataGrid, { Column, Editing, Popup, Form } from 'devextreme-react/data-grid';
 import { Item } from 'devextreme-react/form';
-import Button from 'devextreme-react/button';
-import FileUploader from 'devextreme-react/file-uploader';
+import { cellRender, FileUploaderEditor } from './FileUploaderEditor';
 
-import { Employee, employees } from './data';
+import { employees } from './data';
 
-import { UploadedEvent, UploadErrorEvent, ValueChangedEvent } from 'devextreme/ui/file_uploader';
-import { ColumnCellTemplateData, ColumnEditCellTemplateData, EditCanceledEvent, SavedEvent } from 'devextreme/ui/data_grid';
-import { ClickEvent } from 'devextreme/ui/button';
+import { ColumnEditCellTemplateData, EditCanceledEvent, SavedEvent } from 'devextreme/ui/data_grid';
 
-const backendURL = "http://localhost:5000/";
-
-const cellRender = (data: ColumnCellTemplateData) => {
-  return <img src={backendURL + data.value} alt="employee pic" />;
-}
 
 function App() {
 
   const [retryButtonVisible, setRetryButtonVisible] = useState(false);
-
-  const fileUploaderRef = useRef<FileUploader>(null);
-  const imgRef = useRef<HTMLImageElement>(null);
-
-  const onValueChanged = (e: ValueChangedEvent) => {
-    const reader = new FileReader();
-    reader.onload = function (args) {
-      if (typeof args.target?.result === 'string') {
-        imgRef.current?.setAttribute('src', args.target.result);
-      }
-    }
-    reader.readAsDataURL(e.value![0]); // convert to base64 string 
-
-  };
-  const onClick = useCallback((e: ClickEvent) => {
-    // The retry UI/API is not implemented. Use a private API as shown at T611719.
-    const fileUploaderInstance = fileUploaderRef.current?.instance;
-    //@ts-ignore
-    for (let i = 0; i < fileUploaderInstance._files.length; i++) {
-      //@ts-ignore
-      delete fileUploaderInstance._files[i].uploadStarted;
-    }
-    fileUploaderInstance?.upload();
-  }, []);
-
-  const onUploaded = useCallback((e: UploadedEvent, cellInfo: ColumnEditCellTemplateData) => {
-
-    cellInfo.setValue("images/employees/" + e.request.responseText);
-    setRetryButtonVisible(false);
-  }, []);
-
-  const onUploadError = useCallback((e: UploadErrorEvent) => {
-    let xhttp = e.request;
-    if (xhttp.status === 400) {
-      e.message = e.error.responseText;
-    }
-    if (xhttp.readyState === 4 && xhttp.status === 0) {
-      e.message = "Connection refused";
-    }
-    setRetryButtonVisible(true);
-  }, []);
 
   const onEditCanceled = useEvent((e: EditCanceledEvent) => {
     if (retryButtonVisible)
@@ -71,18 +22,7 @@ function App() {
     if (retryButtonVisible)
       setRetryButtonVisible(false);
   })
-
-  const editCellRender = useCallback((cellInfo: ColumnEditCellTemplateData) => {
-    return (
-      <>
-        <img ref={imgRef} className="uploadedImage" src={`${backendURL}${cellInfo.value}`} alt="employee pic" />
-        <FileUploader ref={fileUploaderRef} multiple={false} accept="image/*" uploadMode="instantly"
-          uploadUrl={backendURL + "FileUpload/post"} onValueChanged={onValueChanged}
-          onUploaded={e => onUploaded(e, cellInfo)} onUploadError={onUploadError} />
-        <Button className={"retryButton"} text="Retry" visible={retryButtonVisible} onClick={onClick} />
-      </>
-    );
-  }, [onClick, onUploadError, onUploaded, retryButtonVisible]);
+  const editCellRender = useEvent((cellInfo: ColumnEditCellTemplateData) => <FileUploaderEditor cellInfo={cellInfo} retryButtonVisible={retryButtonVisible} setRetryButtonVisible={setRetryButtonVisible} />)
 
   return (
     <DataGrid id="gridContainer"
