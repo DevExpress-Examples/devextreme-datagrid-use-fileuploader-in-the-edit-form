@@ -1,4 +1,17 @@
-const employees = [{
+export interface Employee {
+  ID: number;
+  FirstName: string;
+  LastName: string;
+  Prefix: string;
+  Position: string;
+  Picture: string;
+  BirthDate: string;
+  HireDate: string;
+  Notes: string;
+  Address: string;
+}
+
+export const employees: Employee[] = [{
   "ID": 1,
   "FirstName": "John",
   "LastName": "Heart",
@@ -98,5 +111,3 @@ const employees = [{
   "Notes": "As our ombudsman, Kent is on the front-lines solving customer problems and helping our partners address issues out in the field.    He is a classically trained musician and is a member of the Chamber Orchestra.",
   "Address": "12100 Mora Dr"
 }];
-
-export default employees;
