@@ -12,15 +12,17 @@ This example illustrates how to use [FileUploader](https://js.devexpress.com/Doc
 ## Files to Review
 
 - **jQuery**
-    - [index.html](jQuery/index.html)
-    - [script.js](jQuery/script.js)
+    - [index.html](jQuery/src/index.html)
+    - [index.js](jQuery/src/index.js)
 - **Angular**
     - [app.component.html](Angular/src/app/app.component.html)
     - [app.component.ts](Angular/src/app/app.component.ts)
 - **Vue**
-    - [App.vue](Vue/src/App.vue)
+    - [HomeContent.vue](Vue/src/components/HomeContent.vue)
 - **React**
-    - [App.js](React/src/App.js)
+    - [App.tsx](React/src/App.tsx)
+    - [FileUploaderEditor.tsx](React/src/FileUploaderEditor.tsx)
+    - [FileUploaderWithPreview.tsx](React/src/FileUploaderWithPreview.tsx)
 - **ASP.Net Core**    
     - [Index.cshtml](ASP.NET%20Core/ASP.NET%20Core/Views/Home/Index.cshtml)
 
