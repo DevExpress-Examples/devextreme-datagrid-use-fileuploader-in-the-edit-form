@@ -1,0 +1,84 @@
+<script src="~/data/employees.js"></script>
+
+<script>
+   const  backendURL = "http://localhost:5000/";
+</script>
+
+<style>
+    #data-grid-demo {
+        min-height: 530px;
+        width: 1000px;
+    }
+    .dx-row img {
+        height: 50px;
+    }
+    .retryButton {
+        margin-left: 7px;
+    }
+    .uploadedImage {
+        height: 50px;
+        margin-left: 7px;
+        margin-bottom: 7px;
+    }
+</style>
+
+@(Html.DevExtreme().DataGrid()
+        .ShowBorders(true)
+        .DataSource(new JS("employees"))
+        .KeyExpr("ID")
+        .Editing(e => e.Mode(GridEditMode.Popup)
+            .AllowUpdating(true)
+            .Popup(p => p
+                .Title("Employee Info")
+                .ShowTitle(true)
+                .Width(700)
+            )
+            .Form(f => f.Items(items => {
+                items.AddGroup()
+                    .ColCount(2)
+                    .ColSpan(2)
+                    .Items(groupItems => {
+                        groupItems.AddSimple().DataField("Prefix");
+                        groupItems.AddSimple().DataField("FirstName");
+                        groupItems.AddSimple().DataField("LastName");
+                        groupItems.AddSimple().DataField("Position");
+                        groupItems.AddSimple().DataField("BirthDate");
+                        groupItems.AddSimple().DataField("HireDate");
+                    });
+                items.AddGroup()
+                    .Caption("Photo")
+                    .ColCount(2)
+                    .ColSpan(2)
+                    .Items(groupItems => {
+                        groupItems.AddSimple().DataField("Picture").ColSpan(2);
+                    });
+            }))
+        )
+        .Columns(columns => {
+            columns.Add().DataField("Picture")
+                .Width(70)
+                .AllowFiltering(false)
+                .AllowSorting(false)
+                .CellTemplate(
+                    @<text>
+                        @(await Html.PartialAsync("_CellTemplate"))
+                    </text>)
+                .EditCellTemplate(
+                    @<text>
+                        @(await Html.PartialAsync("_EditCellTemplate"))
+                    </text>);
+
+            columns.Add().DataField("Prefix")
+                .Width(70);
+
+            columns.Add().DataField("FirstName");
+
+            columns.Add().DataField("LastName");
+
+            columns.Add().DataField("Position");
+
+            columns.Add().DataField("BirthDate").DataType(GridColumnDataType.Date);
+
+            columns.Add().DataField("HireDate").DataType(GridColumnDataType.Date);
+        })
+)
