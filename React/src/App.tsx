@@ -1,6 +1,8 @@
 import { useState, useCallback } from 'react';
 import DataGrid, { type DataGridTypes } from 'devextreme-react/data-grid';
-import { Column, Editing, Popup, Form } from 'devextreme-react/data-grid';
+import {
+  Column, Editing, Popup, Form,
+} from 'devextreme-react/data-grid';
 import { Item } from 'devextreme-react/form';
 import { useEvent } from './utils';
 import { cellRender, FileUploaderEditor } from './FileUploaderEditor';
@@ -10,13 +12,13 @@ import './App.css';
 function App(): JSX.Element {
   const [retryButtonVisible, setRetryButtonVisible] = useState<boolean>(false);
 
-  const onEditCanceled = useEvent((_e: DataGridTypes.EditCanceledEvent<Employee, number>): void => {
+  const onEditCanceled = useEvent((): void => {
     if (retryButtonVisible) {
       setRetryButtonVisible(false);
     }
   });
 
-  const onSaved = useEvent((_e: DataGridTypes.SavedEvent<Employee, number>): void => {
+  const onSaved = useEvent((): void => {
     if (retryButtonVisible) {
       setRetryButtonVisible(false);
     }
@@ -24,13 +26,13 @@ function App(): JSX.Element {
 
   const editCellRender = useCallback(
     (cellInfo: DataGridTypes.ColumnEditCellTemplateData<Employee, number>): JSX.Element => (
-      <FileUploaderEditor 
-        cellInfo={cellInfo} 
-        retryButtonVisible={retryButtonVisible} 
-        setRetryButtonVisible={setRetryButtonVisible} 
+      <FileUploaderEditor
+        cellInfo={cellInfo}
+        retryButtonVisible={retryButtonVisible}
+        setRetryButtonVisible={setRetryButtonVisible}
       />
     ),
-    [retryButtonVisible]
+    [retryButtonVisible],
   );
 
   return (

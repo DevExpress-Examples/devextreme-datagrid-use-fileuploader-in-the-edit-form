@@ -3,7 +3,7 @@
   width: 90vw;
 }
 
-.uploadedImage {
+.uploaded-image {
   max-width: 100px;
   max-height: 100px;
   border: 1px solid #ddd;
@@ -12,11 +12,11 @@
   display: block;
 }
 
-.retryButton {
+.retry-button {
   margin-top: 10px;
 }
 
-.dx-datagrid-edit-form .uploadedImage {
+.dx-datagrid-edit-form .uploaded-image {
   max-width: 150px;
   max-height: 150px;
 }
