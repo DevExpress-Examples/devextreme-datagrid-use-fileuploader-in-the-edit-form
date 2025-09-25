@@ -85,16 +85,5 @@ let employees = [{
   "BirthDate": "1985/06/05",
   "HireDate": "2008/03/24",
   "Notes": "Cindy joined us in 2008 and has been in the HR department for 2 years. \r\n\r\nShe was recently awarded employee of the month. Way to go Cindy!",
-  "Address": "2211 Bonita Dr."
-}, {
-  "ID": 30,
-  "FirstName": "Kent",
-  "LastName": "Samuelson",
-  "Prefix": "Dr.",
-  "Position": "Ombudsman",
-  "Picture": "images/employees/02.png",
-  "BirthDate": "1972/09/11",
-  "HireDate": "2009/04/22",
-  "Notes": "As our ombudsman, Kent is on the front-lines solving customer problems and helping our partners address issues out in the field.    He is a classically trained musician and is a member of the Chamber Orchestra.",
-  "Address": "12100 Mora Dr"
+  "Address": "3800 S Lamar Blvd."
 }];
