@@ -1,10 +1,10 @@
 import { useCallback, useRef, useLayoutEffect } from "react";
 
-type callbackType<A extends any[], R> = (...args: A) => R;
+type CallbackType<A extends any[], R> = (...args: A) => R;
 
 export const useEvent = <A extends any[], R>(
-  callback: callbackType<A, R>
-): callbackType<A, R> => {
+  callback: CallbackType<A, R>
+): CallbackType<A, R> => {
   const functionRef = useRef(callback);
 
   useLayoutEffect(() => {
