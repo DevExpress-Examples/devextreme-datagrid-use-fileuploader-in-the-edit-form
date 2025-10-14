@@ -7,7 +7,7 @@
     width: 100%;
 }
 
-#gridContainer {
+#grid-container {
     min-height: 530px;
 }
 
@@ -23,7 +23,7 @@
     padding: 10px;
 }
 
-.uploadedImage {
+.uploaded-image {
     max-width: 150px;
     max-height: 150px;
     border: 1px solid #ddd;
@@ -32,7 +32,7 @@
     margin-bottom: 10px;
 }
 
-.retryButton {
+.retry-button {
     margin-top: 10px;
     max-width: 100px;
 }
