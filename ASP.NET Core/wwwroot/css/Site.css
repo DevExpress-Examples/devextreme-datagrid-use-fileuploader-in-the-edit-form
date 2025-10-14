@@ -2,6 +2,26 @@
     margin: 50px;
     width: 90vw;
 }
+
 body {
     margin: 8px;
+}
+
+/* DataGrid with FileUploader styles */
+#data-grid-demo {
+    min-height: 530px;
+}
+
+.dx-row img {
+    height: 50px;
+}
+
+.retry-button {
+    margin-left: 7px;
+}
+
+.uploaded-image {
+    height: 50px;
+    margin-left: 7px;
+    margin-bottom: 7px;
 }

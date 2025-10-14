@@ -1,9 +1,9 @@
-﻿@{ Layout = null;
-    string backendUploadURL = "http://localhost:5000/"; }
+@{ Layout = null;
+    string backendUploadURL = "http://localhost:5020/"; }
 
-[%
+<%
     editCellInfo = arguments[0]; // get all properties of editCellTemplate
-%]
+%>
 
 <script>
     function onRetryButtonClick(e) {
@@ -53,7 +53,7 @@
         .OnUploadError("function(e){onUploadError(e)}")
 )
 
-<img id="imgElement" class="uploadedImage" src="[%- backendURL %][%- data.Picture %]" alt="Photo" />
+<img id="imgElement" class="uploaded-image" src="<%- backendURL %><%- data.Picture %>" alt="Photo" />
 
 @(Html.DevExtreme().Button()
         .ID("retryButton")
@@ -61,4 +61,5 @@
         .Visible(false)
         .Type(ButtonType.Normal)
         .OnClick("function(e){onRetryButtonClick(e)}")
+        .ElementAttr( new { @class = "retry-button" })
 )

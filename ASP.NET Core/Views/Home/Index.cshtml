@@ -1,29 +1,67 @@
 @using ASP_NET_Core.Models
 
-<h2>Home</h2>
+<script>
+   const  backendURL = "http://localhost:5020/";
+</script>
 
-@(Html.DevExtreme().DataGrid<SampleOrder>()
-    .ShowBorders(true)
-    .DataSource(d => d.Mvc().Controller("SampleData").LoadAction("Get").Key("OrderID"))
-    .Columns(columns => {
-        columns.AddFor(m => m.OrderID);
-        columns.AddFor(m => m.OrderDate);
-        columns.AddFor(m => m.CustomerName);
-        columns.AddFor(m => m.ShipCountry);
-        columns.AddFor(m => m.ShipCity);
-    })
-    .Paging(p => p.PageSize(10))
-    .FilterRow(f => f.Visible(true))
-    .HeaderFilter(f => f.Visible(true))
-    .GroupPanel(p => p.Visible(true))
-    .Grouping(g => g.AutoExpandAll(false))
-    .RemoteOperations(true)
-    .Summary(s => s
-        .TotalItems(totalItems => {
-            totalItems.AddFor(m => m.ShipCity).SummaryType(SummaryType.Count);
+@(Html.DevExtreme().DataGrid<Employee>()
+        .ShowBorders(true)
+        .DataSource(SampleData.Employees, "ID")
+        .Editing(e => e.Mode(GridEditMode.Popup)
+            .AllowUpdating(true)
+            .Popup(p => p
+                .Title("Employee Info")
+                .ShowTitle(true)
+                .Width(700)
+            )
+            .Form(f => f.Items(items => {
+                items.AddGroup()
+                    .ColCount(2)
+                    .ColSpan(2)
+                    .Items(groupItems => {
+                        groupItems.AddSimpleFor(m => m.Prefix);
+                        groupItems.AddSimpleFor(m => m.FirstName);
+                        groupItems.AddSimpleFor(m => m.LastName);
+                        groupItems.AddSimpleFor(m => m.Position);
+                        groupItems.AddSimpleFor(m => m.BirthDate);
+                        groupItems.AddSimpleFor(m => m.HireDate);
+                    });
+                items.AddGroup()
+                    .Caption("Photo")
+                    .ColCount(2)
+                    .ColSpan(2)
+                    .Items(groupItems => {
+                        groupItems.AddSimpleFor(m => m.Picture).ColSpan(2);
+                    });
+            }))
+        )
+        .Columns(columns => {
+            columns.AddFor(m => m.Picture)
+                .Width(70)
+                .AllowFiltering(false)
+                .AllowSorting(false)
+                .CellTemplate(
+                    @<text>
+                        @(await Html.PartialAsync("_CellTemplate"))
+                    </text>)
+                .EditCellTemplate(
+                    @<text>
+                        @(await Html.PartialAsync("_EditCellTemplate"))
+                    </text>);
+
+            columns.AddFor(m => m.Prefix)
+                .Width(70)
+                .Caption("Title");
+
+            columns.AddFor(m => m.FirstName);
+
+            columns.AddFor(m => m.LastName);
+
+            columns.AddFor(m => m.Position);
+
+            columns.AddFor(m => m.BirthDate).DataType(GridColumnDataType.Date);
+
+            columns.AddFor(m => m.HireDate).DataType(GridColumnDataType.Date);
         })
-        .GroupItems(groupItems => {
-            groupItems.Add().SummaryType(SummaryType.Count);
-        })
-    )
 )
+
