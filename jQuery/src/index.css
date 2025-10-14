@@ -2,3 +2,37 @@
     margin: 50px;
     width: 90vw;
 }
+
+#data-grid-demo {
+    width: 100%;
+}
+
+#grid-container {
+    min-height: 530px;
+}
+
+.dx-row img {
+    height: 50px;
+    object-fit: cover;
+}
+
+.file-uploader-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+}
+
+.uploaded-image {
+    max-width: 150px;
+    max-height: 150px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+.retry-button {
+    margin-top: 10px;
+    max-width: 100px;
+}
