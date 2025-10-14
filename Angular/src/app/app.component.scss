@@ -1,4 +1,18 @@
-.default-style {
-  margin: 50px;
-  width: 90vw;
+::ng-deep #grid-container {
+  min-height: 530px;
+  width: 1000px;
+}
+
+::ng-deep .dx-row img {
+  height: 50px;
+}
+
+::ng-deep .retry-button {
+  margin-left: 7px;
+}
+
+::ng-deep .uploaded-image {
+  height: 50px;
+  margin-left: 7px;
+  margin-bottom: 7px;
 }
