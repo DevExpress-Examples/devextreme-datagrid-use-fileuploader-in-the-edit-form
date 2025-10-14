@@ -25,7 +25,7 @@ This example illustrates how to use [FileUploader](https://js.devexpress.com/Doc
     - [FileUploaderEditor.tsx](React/src/FileUploaderEditor.tsx)
     - [FileUploaderWithPreview.tsx](React/src/FileUploaderWithPreview.tsx)
 - **ASP.Net Core**    
-    - [Index.cshtml](ASP.NET%20Core/ASP.NET%20Core/Views/Home/Index.cshtml)
+    - [Index.cshtml](ASP.NET%20Core/Views/Home/Index.cshtml)
 
 ## Implementation Details
 
