@@ -1,31 +1,21 @@
 <script setup lang="ts">
-import { ref, type Ref } from "vue";
+import { ref, type Ref } from 'vue';
 
-import "devextreme/dist/css/dx.material.blue.light.compact.css";
+import 'devextreme/dist/css/dx.material.blue.light.compact.css';
 
 import DxDataGrid, {
   DxColumn,
   DxEditing,
   DxPopup,
   DxForm,
-} from "devextreme-vue/data-grid";
-import DxFileUploader from "devextreme-vue/file-uploader";
-import { DxItem } from "devextreme-vue/form";
-import DxButton from "devextreme-vue/button";
+  type DxDataGridTypes,
+} from 'devextreme-vue/data-grid';
+import DxFileUploader, { type DxFileUploaderTypes } from 'devextreme-vue/file-uploader';
+import { DxItem } from 'devextreme-vue/form';
+import DxButton from 'devextreme-vue/button';
 
-import type {
-  UploadedEvent,
-  UploadErrorEvent,
-  ValueChangedEvent,
-} from "devextreme/ui/file_uploader";
-import type {
-  ColumnEditCellTemplateData,
-  EditCanceledEvent,
-  SavedEvent,
-} from "devextreme/ui/data_grid";
-import type { ClickEvent } from "devextreme/ui/button";
-import { employees, type Employee } from "../data";
-import { backendURL } from "../constants";
+import { employees, type Employee } from '../data';
+import { backendURL } from '../constants';
 
 // Reactive refs
 const fileUploaderRef: Ref<InstanceType<typeof DxFileUploader> | null> = ref(null);
@@ -33,7 +23,7 @@ const imageRef: Ref<HTMLImageElement | null> = ref(null);
 const retryButtonVisible = ref<boolean>(false);
 
 // Event handlers with proper typing
-function onClick(_e: ClickEvent): void {
+function onClick(): void {
   // The retry UI/API is not implemented. Use the private API as shown at T611719.
   const fileUploaderInstance = fileUploaderRef.value?.instance;
   if (fileUploaderInstance) {
@@ -46,11 +36,11 @@ function onClick(_e: ClickEvent): void {
   }
 }
 
-function onValueChanged(e: ValueChangedEvent): void {
+function onValueChanged(e: DxFileUploaderTypes.ValueChangedEvent): void {
   if (e.value && e.value.length > 0) {
     const reader = new FileReader();
     reader.onload = (args) => {
-      if (typeof args.target?.result === "string" && imageRef.value) {
+      if (typeof args.target?.result === 'string' && imageRef.value) {
         imageRef.value.src = args.target.result;
       }
     };
@@ -59,32 +49,34 @@ function onValueChanged(e: ValueChangedEvent): void {
 }
 
 // Higher-order function for upload success handler
-const createUploadedHandler = (cellInfo: ColumnEditCellTemplateData<Employee, number>) => 
-  (e: UploadedEvent): void => {
+const createUploadedHandler = (
+  cellInfo: DxDataGridTypes.ColumnEditCellTemplateData<Employee, number>
+) =>
+  (e: DxFileUploaderTypes.UploadedEvent): void => {
     if (e.request?.responseText) {
-      cellInfo.setValue("images/employees/" + e.request.responseText);
+      cellInfo.setValue(`images/employees/${e.request.responseText}`);
       retryButtonVisible.value = false;
     }
   };
 
-function onUploadError(e: UploadErrorEvent): void {
+function onUploadError(e: DxFileUploaderTypes.UploadErrorEvent): void {
   const xhttp = e.request;
   if (xhttp && xhttp.status === 400) {
-    e.message = e.error?.responseText || "Upload error";
+    e.message = e.error?.responseText || 'Upload error';
   }
   if (xhttp && xhttp.readyState === 4 && xhttp.status === 0) {
-    e.message = "Connection refused";
+    e.message = 'Connection refused';
   }
   retryButtonVisible.value = true;
 }
 
-function onEditCanceled(_e: EditCanceledEvent<Employee, number>): void {
+function onEditCanceled(): void {
   if (retryButtonVisible.value) {
     retryButtonVisible.value = false;
   }
 }
 
-function onSaved(_e: SavedEvent<Employee, number>): void {
+function onSaved(): void {
   if (retryButtonVisible.value) {
     retryButtonVisible.value = false;
   }
@@ -101,16 +93,27 @@ function onSaved(_e: SavedEvent<Employee, number>): void {
       @saved="onSaved"
       @edit-canceled="onEditCanceled"
     >
-      <DxEditing :allow-updating="true" mode="popup">
-        <DxPopup :show-title="true" :width="700" title="Employee Info" />
+      <DxEditing
+        :allow-updating="true"
+        mode="popup"
+      >
+        <DxPopup
+          :show-title="true"
+          :width="700"
+          title="Employee Info"
+        />
         <DxForm>
-          <DxItem :col-count="2" :col-span="2" item-type="group">
-            <DxItem data-field="Prefix" />
-            <DxItem data-field="FirstName" />
-            <DxItem data-field="LastName" />
-            <DxItem data-field="Position" />
-            <DxItem data-field="BirthDate" />
-            <DxItem data-field="HireDate" />
+          <DxItem
+            :col-count="2"
+            :col-span="2"
+            item-type="group"
+          >
+            <DxItem data-field="Prefix"/>
+            <DxItem data-field="FirstName"/>
+            <DxItem data-field="LastName"/>
+            <DxItem data-field="Position"/>
+            <DxItem data-field="BirthDate"/>
+            <DxItem data-field="HireDate"/>
           </DxItem>
           <DxItem
             :col-count="2"
@@ -118,7 +121,10 @@ function onSaved(_e: SavedEvent<Employee, number>): void {
             item-type="group"
             caption="Photo"
           >
-            <DxItem data-field="Picture" :col-span="2" />
+            <DxItem
+              data-field="Picture"
+              :col-span="2"
+            />
           </DxItem>
         </DxForm>
       </DxEditing>
@@ -129,31 +135,41 @@ function onSaved(_e: SavedEvent<Employee, number>): void {
         cell-template="cellTemplate"
         edit-cell-template="editCellTemplate"
       />
-      <DxColumn data-field="Prefix" :width="70" caption="Title" />
-      <DxColumn data-field="FirstName" />
-      <DxColumn data-field="LastName" />
-      <DxColumn data-field="Position" />
-      <DxColumn data-field="BirthDate" data-type="date" />
-      <DxColumn data-field="HireDate" data-type="date" />
-      
+      <DxColumn
+        data-field="Prefix"
+        :width="70"
+        caption="Title"
+      />
+      <DxColumn data-field="FirstName"/>
+      <DxColumn data-field="LastName"/>
+      <DxColumn data-field="Position"/>
+      <DxColumn
+        data-field="BirthDate"
+        data-type="date"
+      />
+      <DxColumn
+        data-field="HireDate"
+        data-type="date"
+      />
+
       <!-- Cell template for displaying images -->
       <template #cellTemplate="{ data }">
-        <img 
-          :src="backendURL + data.value" 
+        <img
+          :src="backendURL + data.value"
           alt="employee pic"
           style="max-width: 100%; height: auto;"
-        />
+        >
       </template>
-      
+
       <!-- Edit cell template for file upload -->
       <template #editCellTemplate="{ data }">
         <div class="file-uploader-container">
           <img
             ref="imageRef"
-            class="uploadedImage"
+            class="uploaded-image"
             :src="backendURL + data.value"
             alt="employee pic"
-          />
+          >
           <DxFileUploader
             ref="fileUploaderRef"
             :multiple="false"
@@ -161,15 +177,16 @@ function onSaved(_e: SavedEvent<Employee, number>): void {
             upload-mode="instantly"
             :upload-url="backendURL + 'FileUpload/post'"
             @value-changed="onValueChanged"
-            @uploaded="createUploadedHandler(data)"
+            :on-uploaded="createUploadedHandler(data)"
             @upload-error="onUploadError"
           />
           <DxButton
-            class="retryButton"
-            text="Retry"
+            class="retry-button"
             :visible="retryButtonVisible"
             @click="onClick"
-          />
+          >
+            Retry
+          </DxButton>
         </div>
       </template>
     </DxDataGrid>
@@ -194,7 +211,7 @@ function onSaved(_e: SavedEvent<Employee, number>): void {
   gap: 10px;
 }
 
-.uploadedImage {
+.uploaded-image {
   max-width: 150px;
   max-height: 150px;
   border: 1px solid #ddd;
@@ -202,7 +219,7 @@ function onSaved(_e: SavedEvent<Employee, number>): void {
   object-fit: cover;
 }
 
-.retryButton {
+.retry-button {
   margin-top: 10px;
   align-self: flex-start;
 }
