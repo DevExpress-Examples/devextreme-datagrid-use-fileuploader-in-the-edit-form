@@ -1,0 +1,27 @@
+name: Check README links
+
+concurrency:
+  group: wf-${{github.event.pull_request.number || github.sha}}-${{github.workflow}}
+  cancel-in-progress: true
+
+on:
+  pull_request:
+  push:
+    branches:
+      - "[0-9][0-9].[0-9].[0-9]*"
+
+jobs:
+  link-check:
+    name: Check README links
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check links in README
+        uses: lycheeverse/lychee-action@v1
+        continue-on-error: true
+        with:
+          args: --verbose --no-progress './**/[Rr][Ee][Aa][Dd][Mm][Ee].md' --exclude-file .lycheeignore
+          fail: true
