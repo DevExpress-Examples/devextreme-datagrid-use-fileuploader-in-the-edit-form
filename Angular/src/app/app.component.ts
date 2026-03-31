@@ -32,7 +32,6 @@ export class AppComponent {
   onClick(_e: DxButtonTypes.ClickEvent): void {
     // The retry UI/API is not implemented. Use the private API as shown at T611719.
     const fileUploaderInstance = this.fileUploaderRef.instance;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const files = (fileUploaderInstance as any)._files;
     if (files) {
       for (const file of files) {
