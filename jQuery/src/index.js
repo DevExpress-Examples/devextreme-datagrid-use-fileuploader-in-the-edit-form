@@ -119,11 +119,8 @@ $(() => {
       onClick() {
         // The retry UI/API is not implemented. Use a private API as shown at T611719.
         try {
-          // eslint-disable-next-line no-underscore-dangle
           if (fileUploader && fileUploader._files) {
-            // eslint-disable-next-line no-underscore-dangle
             for (let i = 0; i < fileUploader._files.length; i += 1) {
-              // eslint-disable-next-line no-underscore-dangle
               delete fileUploader._files[i].uploadStarted;
             }
             fileUploader.upload();
