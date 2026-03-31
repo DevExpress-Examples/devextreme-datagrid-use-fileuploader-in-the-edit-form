@@ -1,6 +1,6 @@
 $(() => {
   // Configuration constants
-  const backendURL = 'http://localhost:5020/';
+  const backendURL = 'http://localhost:5000/';
 
   // State management object
   const state = {

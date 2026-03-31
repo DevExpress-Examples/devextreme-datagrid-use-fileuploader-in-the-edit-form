@@ -17,7 +17,7 @@ export class AppComponent {
 
   employees: Employee[];
 
-  backendURL = 'http://localhost:5020/';
+  backendURL = 'http://localhost:5000/';
 
   retryButtonVisible = false;
 
