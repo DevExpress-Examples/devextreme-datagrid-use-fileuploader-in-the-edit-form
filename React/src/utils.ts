@@ -1,6 +1,5 @@
 import { useCallback, useRef, useLayoutEffect } from 'react';
 
-// eslint-disable-next-line no-unused-vars
 type CallbackType<A extends any[], R> = (...args: A) => R;
 
 export function useEvent<A extends any[], R>(
