@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import type { DxDataGridTypes } from 'devextreme-angular/ui/data-grid';
 import type { DxFileUploaderTypes } from 'devextreme-angular/ui/file-uploader';
 import { DxFileUploaderComponent } from 'devextreme-angular/ui/file-uploader';
@@ -10,6 +10,7 @@ import { Service, type Employee } from './app.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
   providers: [Service],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class AppComponent {
