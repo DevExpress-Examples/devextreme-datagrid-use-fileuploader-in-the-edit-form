@@ -16,7 +16,6 @@
   },
   "dependencies": {
     "devextreme": "26.1.2-beta",
-    "devextreme-dist": "26.1.2-beta",
     "devextreme-react": "26.1.2-beta",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
